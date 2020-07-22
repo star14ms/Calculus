@@ -4,7 +4,7 @@ print('Calculus Too Easy!\n')
 print('Type the coefficients for each clause in descending order') 
 print('(Separate by spacing)')
 print('(No Terms: type a coefficient of zero)')
-
+################################################################################################
 while True:
   print('ㅡ' * 16)
   y = input().split()
@@ -47,9 +47,9 @@ while True:
       print(clause)
 
   c = input('differential(1) | indefinite_integral(2) | definite_integral (3) : ')
-
+################################################################################################
   if c == 'differential' or c == '1' :
-    
+   
     print("f'(x)=", end='')
     for n in range(len(y)):
       y[n] = (len(y)-1-n) * y[n]
@@ -77,7 +77,7 @@ while True:
         print(y[n], end='')
       else: 
         print(y[n])
-
+################################################################################################
   elif c == 'indefinite_integral' or c == '2':
 
     print("F(x) =", end='')
@@ -99,7 +99,7 @@ while True:
         print(y[n], end='')
       else: 
         print(y[n],'+ C')
-
+################################################################################################
   elif c == 'definite_integral' or c == '3' :
 
     x = input('Range [a, b] : ').split()
