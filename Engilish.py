@@ -1,8 +1,10 @@
 from fractions import Fraction as f
 
 print('Calculus Too Easy!\n')
-print('Type the coefficients for each clause in descending order (Separate by spacing)')
+print('Type the coefficients for each clause in descending order') 
+print('(Separate by spacing)')
 print('(No Terms: type a coefficient of zero)')
+
 while True:
   print('ㅡ' * 16)
   y = input().split()
