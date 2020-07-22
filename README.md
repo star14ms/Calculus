@@ -1,6 +1,6 @@
 # Calculus
 CALCULUS MACHINE
 
-Basic differential, integral_(indefinite, definite)
+Basic differential, indefinite/definite_integral
 
 COMMENTS WELCOME
