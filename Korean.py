@@ -1,7 +1,10 @@
 from fractions import Fraction as f
 
 print('미적분 너무 쉬워!\n')
-print('각 항의 계수를 내림차순으로 쓰시오\n(중간에 없는 항도 0을 써서 표시)')
+print('각 항의 계수를 내림차순으로 쓰시오')
+print('(띄어쓰기로 구분)')
+print('(중간에 없는 항도 0을 써서 표시)')
+
 while True:
   print('ㅡ' * 16)
   y = input().split()
