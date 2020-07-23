@@ -16,17 +16,21 @@ while True: # 반복
 
   숫자 = True
   for n in range(len(y)):
-    if y[n].isalpha(): 숫자 = False
+    문자변환 = str.maketrans('abcdefghijklmnopqrstuvwxyz', 'aaaaaaaaaaaaaaaaaaaaaaaaaa')
+    문자검사 = y[n].translate(문자변환)
+    if 'a' in 문자검사: 숫자 = False
   if 숫자 == False: continue
-  # 각 항중 하나라도 글자만 있으면 초기화
+  # 각 항에서 문자가 있으면 초기화
 
   for n in range(len(y)): 
-    if '/' in y[len(y)-1-n]:
-      분자, 분모 = map(int, y[len(y)-1-n].split('/'))
-    else:
-      분자, 분모 = int(y[len(y)-1-n]), 1
-    y[len(y)-1-n] = f(분자, 분모)
-  # 각 항의 계수를 분수꼴로 바꾸기 ( len(y)-1-n : 차수 )
+    if '/' in y[n]:
+      분자, 분모 = map(int, y[n].split('/'))
+      y[n] = f(분자, 분모)
+    elif not '.' in y[n]:
+      분자, 분모 = int(y[n]), 1
+      y[n] = f(분자, 분모)
+    else: y[n] = float(y[n])
+  # 각 항의 계수를 소수, 분수꼴로 바꾸기 ( len(y)-1-n : 차수 )
 
   print('f(x) =', end='') 
   # 'f(x) =' 출력
@@ -140,7 +144,7 @@ while True: # 반복
           continue
       # 계수가 0이면 그 항은 생략
 
-      if (y[n] == f(1, 1)) & (n != len(y) - 1):
+      if y[n] == f(1, 1):
         y[n] = ''
       # 계수가 1이면 1생략
         
