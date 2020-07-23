@@ -24,6 +24,9 @@ while True:
 
   print('f(x) =', end='') 
   for n in range(len(y)):
+    if (y[n] == f(1, 1)) & (n != len(y) - 1):
+      y[n] = ''
+
     if n == len(y)-1:
       clause = str(y[n])
     elif n == len(y)-2:
@@ -31,25 +34,34 @@ while True:
     else :
       clause = str(y[n]) + 'x^' + str(len(y)-1-n)
 
-    clause = clause.replace('-',' - ').replace('1x','x').replace('1x','11x')
+    clause = clause.replace('-',' - ')
     if n == 0 : 
         clause = ' ' + clause
     elif (not '-' in clause):
       clause = ' + ' + clause
 
-    clause_Separation = clause.split('x')
+    front_of_x = clause.split('x')
     if n == 0 :
-      if clause_Separation[0] == ' 0': continue
-    elif clause_Separation[0] == ' + 0': continue
+      if front_of_x[0] == ' 0':
+        continue
     if n != len(y)-1: 
-      print(clause, end='')
+      if front_of_x[0] == ' + 0':
+        continue
+      else: 
+        print(clause, end='')
     else:
-      print(clause)
+      if front_of_x[0] == ' + 0': 
+        print()
+      else:
+        print(clause)
+
+    if y[n] == '':
+      y[n] = f(1, 1)
 
   c = input('differential(1) | indefinite_integral(2) | definite_integral (3) : ')
 ################################################################################################
   if c == 'differential' or c == '1' :
-   
+    
     print("f'(x)=", end='')
     for n in range(len(y)):
       y[n] = (len(y)-1-n) * y[n]
@@ -57,17 +69,21 @@ while True:
       if y[n] == 0: 
         if len(y) == 1: 
           print(' 0'); continue
-        else : 
-          continue
+        else: 
+          if n == len(y)-1: 
+            print()
+            continue
+          else: 
+            continue
 
       if n == len(y)-2:
         y[n] = str(y[n])
       elif n == len(y)-3:
         y[n] = str(y[n]) + 'x'
-      else :
+      else:
         y[n] = str(y[n]) + 'x^' + str(len(y)-2-n)
 
-      y[n] = y[n].replace('-',' - ').replace('1x','x').replace('1x','11x')
+      y[n] = y[n].replace('-',' - ')
       if n == 0 : 
         y[n] = ' ' + y[n]
       elif (not '-' in y[n]):
@@ -84,12 +100,25 @@ while True:
     for n in range(len(y)):
       y[n] = y[n] / (len(y)-n)
 
+      if (y[n] == f(1, 1)) & (n != len(y) - 1):
+        y[n] = ''
+
+      if y[n] == 0: 
+        if len(y) == 1: 
+          print(' 0'); continue
+        else: 
+          if n == len(y)-1: 
+            print()
+            continue
+          else: 
+            continue
+
       if n == len(y)-1:
         y[n] = str(y[n]) + 'x'
       else :
         y[n] = str(y[n]) + 'x^' + str(len(y)-n)
 
-      y[n] = y[n].replace('-',' - ').replace('1x','x').replace('1x','11x')
+      y[n] = y[n].replace('-',' - ')
       if n == 0 : 
         y[n] = ' ' + y[n]
       elif (not '-' in y[n]):
@@ -102,7 +131,7 @@ while True:
 ################################################################################################
   elif c == 'definite_integral' or c == '3' :
 
-    x = input('Range [a, b] : ').split()
+    x = input('range [a, b] : ').split()
     if len(x) != 2 :continue
     elif x[0].isalpha() | x[1].isalpha():continue
 
@@ -117,22 +146,22 @@ while True:
           x[n] = int(x[n])
 
     print('[F(x)]{},{} = '.format(x[0], x[1]), end='')
-    Value = 0
+    value = 0
     for n in range(len(y)):
       y[n] = y[n] / (len(y)-n)
       y[n] = y[n] * (x[1]**(len(y)-n) - x[0]**(len(y)-n))
-      Value = Value + y[n]
+      value = value + y[n]
     
     def Convertible_to_decimal(n): 
-      for i in (2, 5): 
-        while n%i == 0: 
-          n=int(n/i) 
-      if n==1: 
+      for prime_number in (2, 5): 
+        while Share%prime_number == 0: 
+          Share=int(Share/prime_number) 
+      if Share==1:
         return True 
       else : 
         return False 
 
-    if Convertible_to_decimal(Value.denominator) & Value.denominator!=1 : 
-      print(float(Value))
+    if Convertible_to_decimal(value.denominator) & value.denominator!=1 : 
+      print(float(value))
     else :
-      print(Value)
+      print(value)
