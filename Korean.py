@@ -33,7 +33,6 @@ while True: # 반복
 
   for n in range(len(y)):
   # 각 항의 계수에서
-
     if (y[n] == f(1, 1)) & (n != len(y) - 1):
       y[n] = ''
     # 계수가 1인 항은 1생략
@@ -53,21 +52,21 @@ while True: # 반복
       항 = ' + ' + 항
     # 부호, 공백 추가
 
-    항분리 = 항.split('x')
+    x앞쪽 = 항.split('x')
     if n == 0 :
-      if 항분리[0] == ' 0':
+      if x앞쪽[0] == ' 0':
         continue
     if n != len(y)-1: 
-      if 항분리[0] == ' + 0':
+      if x앞쪽[0] == ' + 0':
         continue
       else: 
         print(항, end='')
     else:
-      if 항분리[0] == ' + 0': 
+      if x앞쪽[0] == ' + 0': 
         print()
       else:
         print(항)
-    # 문자를 붙여서 출력 (항이 0이면 생략)
+    # 출력 (항이 0이면 생략)
 
     if y[n] == '':
       y[n] = f(1, 1)
@@ -77,21 +76,20 @@ while True: # 반복
   # 미분, 부정적분, 정적분 중 고르기
 ################################################################################################
   if c == '미분' or c == '1' :
-    # 미분을 골랐을 때
-
+  # 미분을 골랐을 때
     print("f'(x)=", end='')
     # "f'(x)=" 출력
   
-    for n in range(len(y)):
-    # 각 항의 계수에서
+    if len(y) == 1: 
+      print(' 0'); continue
+    # 항이 하나면 0 출력
 
+    for n in range(len(y)-1):
+    # 각 항의 계수에서
       y[n] = (len(y)-1-n) * y[n]
       # 새 계수 = 차수 * 계수
 
-      if y[n] == 0: 
-        if len(y) == 1: 
-          print(' 0'); continue
-        else: 
+      if y[n] == 0:   
           if n == len(y)-1: 
             print()
             continue
@@ -99,7 +97,7 @@ while True: # 반복
             continue
       # 계수가 0이면 그 항은 생략
 
-      if (y[n] == f(1, 1)) & (n != len(y) - 1):
+      if (y[n] == f(1, 1)) & (n != len(y)-2):
         y[n] = ''
       # 계수가 1이면 1생략
 
@@ -126,25 +124,20 @@ while True: # 반복
 ################################################################################################
   elif c == '부정적분' or c == '2':
   # 부정적분을 골랐을 때
-
     print('F(x) =', end='')
     # 'F(x) =' 출력
 
     for n in range(len(y)):
     # 각 항의 계수에서
-
       y[n] = y[n] / (len(y)-1-n+1)
       # 새 계수 = 계수 / 차수 + 1
 
       if y[n] == 0: 
-        if len(y) == 1: 
-          print(' 0'); continue
+        if n == len(y)-1: 
+          print()
+          continue
         else: 
-          if n == len(y)-1: 
-            print()
-            continue
-          else: 
-            continue
+          continue
       # 계수가 0이면 그 항은 생략
 
       if (y[n] == f(1, 1)) & (n != len(y) - 1):
@@ -171,7 +164,6 @@ while True: # 반복
 ################################################################################################
   elif c == '정적분' or c == '3' :
   # 정적분을 골랐을 때
-
     x = input('범위 [a, b] : ').split()
     # 범위 a, b 입력받음 ( a = x[0], b = x[1] )
 
@@ -200,17 +192,17 @@ while True: # 반복
       값 = 값 + y[n]
     # 값 = 각 항을 정적분하고 더한 값
 
-    def 소수변환가능(n): 
+    def 소수변환가능(몫): 
       for 소수 in (2, 5): 
-        while 몫%소수 == 0: 
-          몫=int(몫/소수) 
-      if 몫==1:
+        while 몫 % 소수 == 0: 
+          몫 = int(몫 / 소수) 
+      if 몫 == 1:
         return True 
       else : 
         return False 
     # 분수를 소수로 나타낼 수 있나 판별하는 함수 정의
 
-    if 소수변환가능(값.denominator) & 값.denominator!=1 : 
+    if 소수변환가능(값.denominator) & 값.denominator != 1: 
       print(float(값))
     else :
       print(값)
