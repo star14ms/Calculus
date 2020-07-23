@@ -24,6 +24,9 @@ while True:
 
   print('f(x) =', end='') 
   for n in range(len(y)):
+    if (y[n] == f(1, 1)) & (n != len(y) - 1):
+      y[n] = ''
+
     if n == len(y)-1:
       항 = str(y[n])
     elif n == len(y)-2:
@@ -31,7 +34,7 @@ while True:
     else :
       항 = str(y[n]) + 'x^' + str(len(y)-1-n)
 
-    항 = 항.replace('-',' - ').replace('1x','x').replace('1x','11x')
+    항 = 항.replace('-',' - ')
     if n == 0 : 
         항 = ' ' + 항
     elif (not '-' in 항):
@@ -39,12 +42,21 @@ while True:
 
     항분리 = 항.split('x')
     if n == 0 :
-      if 항분리[0] == ' 0': continue
-    elif 항분리[0] == ' + 0': continue
+      if 항분리[0] == ' 0':
+        continue
     if n != len(y)-1: 
-      print(항, end='')
+      if 항분리[0] == ' + 0':
+        continue
+      else: 
+        print(항, end='')
     else:
-      print(항)
+      if 항분리[0] == ' + 0': 
+        print()
+      else:
+        print(항)
+
+    if y[n] == '':
+      y[n] = f(1, 1)
 
   c = input('미분(1) | 부정적분(2) | 정적분(3) : ')
 ################################################################################################
@@ -57,17 +69,21 @@ while True:
       if y[n] == 0: 
         if len(y) == 1: 
           print(' 0'); continue
-        else : 
-          continue
+        else: 
+          if n == len(y)-1: 
+            print()
+            continue
+          else: 
+            continue
 
       if n == len(y)-2:
         y[n] = str(y[n])
       elif n == len(y)-3:
         y[n] = str(y[n]) + 'x'
-      else :
+      else:
         y[n] = str(y[n]) + 'x^' + str(len(y)-2-n)
 
-      y[n] = y[n].replace('-',' - ').replace('1x','x').replace('1x','11x')
+      y[n] = y[n].replace('-',' - ')
       if n == 0 : 
         y[n] = ' ' + y[n]
       elif (not '-' in y[n]):
@@ -77,19 +93,30 @@ while True:
         print(y[n], end='')
       else: 
         print(y[n])
-################################################################################################################################################################################################
+################################################################################################
   elif c == '부정적분' or c == '2':
 
     print("F(x) =", end='')
     for n in range(len(y)):
       y[n] = y[n] / (len(y)-n)
+      if (y[n] == f(1, 1)) & (n != len(y) - 1):
+        y[n] = ''
+      if y[n] == 0: 
+        if len(y) == 1: 
+          print(' 0'); continue
+        else: 
+          if n == len(y)-1: 
+            print()
+            continue
+          else: 
+            continue
 
       if n == len(y)-1:
         y[n] = str(y[n]) + 'x'
       else :
         y[n] = str(y[n]) + 'x^' + str(len(y)-n)
 
-      y[n] = y[n].replace('-',' - ').replace('1x','x').replace('1x','11x')
+      y[n] = y[n].replace('-',' - ')
       if n == 0 : 
         y[n] = ' ' + y[n]
       elif (not '-' in y[n]):
@@ -124,10 +151,10 @@ while True:
       값 = 값 + y[n]
     
     def 소수변환가능(n): 
-      for i in (2, 5): 
-        while n%i == 0: 
-          n=int(n/i) 
-      if n==1: 
+      for 소수 in (2, 5): 
+        while 몫%소수 == 0: 
+          몫=int(몫/소수) 
+      if 몫==1:
         return True 
       else : 
         return False 
