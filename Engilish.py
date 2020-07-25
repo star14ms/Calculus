@@ -206,7 +206,7 @@ while True: # repeat
         return False 
     # 분수를 소수로 나타낼 수 있나 판별하는 함수 정의
 
-    if Convertible_to_decimal(value.denominator) & value.denominator != 1: 
+    if Convertible_to_decimal(value.denominator) & (value.denominator != 1): 
       print(float(value))
     else :
       print(value)
