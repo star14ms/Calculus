@@ -206,7 +206,7 @@ while True: # 반복
         return False 
     # 분수를 소수로 나타낼 수 있나 판별하는 함수 정의
 
-    if 소수변환가능(값.denominator) & 값.denominator != 1: 
+    if 소수변환가능(값.denominator) & (값.denominator != 1): 
       print(float(값))
     else :
       print(값)
