@@ -52,11 +52,11 @@ while True: # 반복
       분자, 분모 = int(10**소수자릿수*분자), int(10**소수자릿수*분모)
     elif '/' in y[n]:
         분자, 분모 = map(int, y[n].split('/'))
-    elif not '.' in y[n]:
-        분자, 분모 = int(y[n]), 1
-    else: 
-        분모 = 10*(len(str(y[n]))-1-str(y[n]).index('.'))
+    elif '.' in y[n]:
         분자 = int(y[n].replace('.',''))
+        분모 = 10*(len(str(y[n]))-1-str(y[n]).index('.'))
+    else: 
+        분자, 분모 = int(y[n]), 1
     y[n] = f(분자, 분모)
   # 각 항의 계수를 분수꼴로 바꾸기 
 
