@@ -11,26 +11,54 @@ while True: # 반복
   y = input().split()
   # 함수의 각 항의 계수 입력 받기
 
-  if y == []: continue 
-  # 입력 받은 게 없으면 초기화
+  유리수 = True
 
-  숫자 = True
+  if y == []: 유리수 = False
+
   for n in range(len(y)):
-    문자변환 = str.maketrans('abcdefghijklmnopqrstuvwxyz', 'aaaaaaaaaaaaaaaaaaaaaaaaaa')
-    문자검사 = y[n].translate(문자변환)
-    if 'a' in 문자검사: 숫자 = False
-  if 숫자 == False: continue
-  # 각 항에서 문자가 있으면 초기화
+    변환 = str.maketrans('1234567890/.', '111111111111')
+    for m in range(len(y[n])):
+      유리수_재료 = y[n][m].translate(변환)
+      if not '1' in 유리수_재료: 유리수 = False
+
+    if '/' in y[n]:
+      if y[n].count('/') != 1: 유리수 = False
+      if y[n].index('/') == 0 | y[n].index('/') == len(y[n])-1: 유리수 = False
+      if 유리수:
+        분자, 분모 = map(float, y[n].split('/'))
+        if 분모 == 0: 유리수 = False
+    
+    if '.' in y[n]:
+      if ('/' in y[n]) & 유리수:
+        a, b = y[n].split('/')
+        for m in (a, b):
+          if m.count('.') > 1: 유리수 = False
+      else:  
+        if y[n].count('.') != 1: 유리수 = False
+        if y[n].index('.') == 0 | y[n].index('.') == len(y[n])-1: 유리수 = False
+
+  if 유리수 == False: continue
+  # 입력x | 계수 하나라도 (유리수x | 분모=0) :초기화
 
   for n in range(len(y)): 
-    if '/' in y[n]:
-      분자, 분모 = map(int, y[n].split('/'))
-      y[n] = f(분자, 분모)
-    elif not '.' in y[n]:
-      분자, 분모 = int(y[n]), 1
-      y[n] = f(분자, 분모)
-    else: y[n] = float(y[n])
-  # 각 항의 계수를 소수, 분수꼴로 바꾸기 ( len(y)-1-n : 차수 )
+    if '/' in y[n] and '.' in y[n]:
+      분자, 분모 = map(float, y[n].split('/'))
+      소수자릿수 = 0
+      for m in (분자, 분모):
+          o = str(m).split('.')
+          if o[1] != 0:
+            소수자릿수 += len(str(m))-1-str(m).index('.')
+      분자, 분모 = int(10**소수자릿수*분자), int(10**소수자릿수*분모)
+    else:
+      if '/' in y[n]:
+        분자, 분모 = map(int, y[n].split('/'))
+      elif not '.' in y[n]:
+        분자, 분모 = int(y[n]), 1
+      else: 
+        분모 = 10*(len(str(y[n]))-1-str(y[n]).index('.'))
+        분자 = int(y[n].replace('.',''))
+    y[n] = f(분자, 분모)
+  # 각 항의 계수를 분수꼴로 바꾸기 
 
   print('f(x) =', end='') 
   # 'f(x) =' 출력
@@ -39,7 +67,7 @@ while True: # 반복
   # 각 항의 계수에서
     if (y[n] == f(1, 1)) & (n != len(y) - 1):
       y[n] = ''
-    # 계수가 1인 항은 1생략
+    # 계수가 1인 항은 1생략 (len(y)-1 : 상수항)
 
     if n == len(y)-1:
       항 = str(y[n])
@@ -47,7 +75,7 @@ while True: # 반복
       항 = str(y[n]) + 'x'
     else :
       항 = str(y[n]) + 'x^' + str(len(y)-1-n)
-    # 변수기호, 그 변수의 지수 추가
+    # 변수기호, 그 변수의 지수 추가 (len(y)-1-n : 내림차순)
 
     항 = 항.replace('-',' - ')
     if n == 0 : 
@@ -199,15 +227,15 @@ while True: # 반복
     def 소수변환가능(몫): 
       for 소수 in (2, 5): 
         while 몫 % 소수 == 0: 
-          몫 = int(몫 / 소수) 
+          몫 = 몫 / 소수 
       if 몫 == 1:
         return True 
       else : 
         return False 
-    # 분수를 소수로 나타낼 수 있나 판별하는 함수 정의
+    # 분수를 소수로 나타낼 유리수 있나 판별하는 함수 정의
 
     if 소수변환가능(값.denominator) & (값.denominator != 1): 
       print(float(값))
-    else :
+    else:
       print(값)
-    # 값을, 소수꼴로 바꿀 수 있으면 바꾸고, 출력
+    # 값을, 소수꼴로 바꿀 유리수 있으면 바꾸고, 출력
