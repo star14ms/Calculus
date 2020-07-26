@@ -11,26 +11,53 @@ while True: # repeat
   y = input().split()
   # Receive Input:coefficient of each terms of a function
 
-  if y == []: continue 
-  # Initialization If nothing input received
+  rational_num = True
 
-  no_letter = True
+  if y == []: rational_num = False
+
   for n in range(len(y)):
-    transformation = str.maketrans('abcdefghijklmnopqrstuvwxyz', 'aaaaaaaaaaaaaaaaaaaaaaaaaa')
-    to_examine = y[n].translate(transformation)
-    if 'a' in to_examine: no_letter = False
-  if no_letter == False: continue
-  # 각 항에서 문자가 있으면 초기화
+    conversion = str.maketrans('1234567890/.', '111111111111')
+    for m in range(len(y[n])):
+      rational_material = y[n][m].translate(conversion)
+      if not '1' in rational_material: rational_num = False
+
+    if '/' in y[n]:
+      if y[n].count('/') != 1: rational_num = False
+      if y[n].index('/') == 0 | y[n].index('/') == len(y[n])-1: rational_num = False
+      if rational_num:
+        numerator, denominator = map(float, y[n].split('/'))
+        if denominator == 0: rational_num = False
+    
+    if '.' in y[n]:
+      if ('/' in y[n]) & rational_num:
+        a, b = y[n].split('/')
+        for m in (a, b):
+          if m.count('.') > 1: rational_num = False
+      else:  
+        if y[n].count('.') != 1: rational_num = False
+        if y[n].index('.') == 0 | y[n].index('.') == len(y[n])-1: rational_num = False
+
+  if rational_num == False: continue
+  # 입력x | 계수 하나라도 (유리수x | denominator=0) :초기화
 
   for n in range(len(y)): 
-    if '/' in y[n]:
-      numerator, denominator = map(int, y[n].split('/'))
-      y[n] = f(numerator, denominator)
+    if '/' in y[n] and '.' in y[n]:
+      numerator, denominator = map(float, y[n].split('/'))
+      decimal_digit = 0
+      for m in (numerator, denominator):
+          o = str(m).split('.')
+          if o[1] != 0:
+            decimal_digit += len(str(m))-1-str(m).index('.')
+      numerator, denominator = int(10**decimal_digit*numerator), int(10**decimal_digit*denominator)
+    elif '/' in y[n]:
+        numerator, denominator = map(int, y[n].split('/'))
     elif not '.' in y[n]:
-      numerator, denominator = int(y[n]), 1
-      y[n] = f(numerator, denominator)
-    else: y[n] = float(y[n])
-  # 각 항의 계수를 분수꼴로 바꾸기 ( len(y)-1-n : 차수 )
+        numerator, denominator = int(y[n]), 1
+    else: 
+        denominator = 10*(len(str(y[n]))-1-str(y[n]).index('.'))
+        numerator = int(y[n].replace('.',''))
+    y[n] = f(numerator, denominator)
+  # 각 항의 계수를 분수꼴로 바꾸기 
 
   print('f(x) =', end='') 
   # 'f(x) =' 출력
@@ -39,7 +66,7 @@ while True: # repeat
   # 각 항의 계수에서
     if (y[n] == f(1, 1)) & (n != len(y) - 1):
       y[n] = ''
-    # 계수가 1인 항은 1생략
+    # 계수가 1인 항은 1생략 (len(y)-1 : 상수항)
 
     if n == len(y)-1:
       term = str(y[n])
@@ -47,7 +74,7 @@ while True: # repeat
       term = str(y[n]) + 'x'
     else :
       term = str(y[n]) + 'x^' + str(len(y)-1-n)
-    # 변수기호, 그 변수의 지수 추가
+    # 변수기호, 그 변수의 지수 추가 (len(y)-1-n : 내림차순)
 
     term = term.replace('-',' - ')
     if n == 0 : 
@@ -76,10 +103,10 @@ while True: # repeat
       y[n] = f(1, 1)
     # 위에서 생략한 계수 1을 다시 1로 만들기
 
-  c = input('differential(1) | indefinite_integral(2) | definite_integral (3) : ')
+  c = input('differential(1) | integral-indef(2), def(3): ')
   # 미분, 부정적분, 정적분 중 고르기
 ################################################################################################
-  if c == 'differential' or c == '1' :
+  if c == '1' :
   # 미분을 골랐을 때
     print("f'(x)=", end='')
     # "f'(x)=" 출력
@@ -126,7 +153,7 @@ while True: # repeat
         print(y[n])
       # 출력
 ################################################################################################
-  elif c == 'indefinite_integral' or c == '2':
+  elif c == '2':
   # 부정적분을 골랐을 때
     print('F(x) =', end='')
     # 'F(x) =' 출력
@@ -166,7 +193,7 @@ while True: # repeat
         print(y[n],'+ C')
       # 출력 (적분상수 포함)
 ################################################################################################
-  elif c == 'definite_integral' or c == '3' :
+  elif c == '3' :
   # 정적분을 골랐을 때
     x = input('range [a, b] : ').split()
     # 범위 a, b 입력받음 ( a = x[0], b = x[1] )
@@ -204,10 +231,10 @@ while True: # repeat
         return True 
       else : 
         return False 
-    # 분수를 소수로 나타낼 수 있나 판별하는 함수 정의
+    # 분수를 소수로 나타낼 rational_number 있나 판별하는 함수 정의
 
-    if Convertible_to_decimal(value.denominator) & (value.denominator != 1): 
+    if Convertible_to_decimal(value.denominator) & value.denominator != 1: 
       print(float(value))
     else :
       print(value)
-    # 값을, 소수꼴로 바꿀 수 있으면 바꾸고, 출력
+    # 값을, 소수꼴로 바꿀 rational_number 있으면 바꾸고, 출력
