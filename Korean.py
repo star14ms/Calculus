@@ -40,7 +40,8 @@ while True: # 반복
   if 유리수 == False: continue
   # 입력x | 계수 하나라도 (유리수x | 분모=0) :초기화
 
-  for n in range(len(y)): 
+  for n in range(len(y)):
+
     if '/' in y[n] and '.' in y[n]:
       분자, 분모 = map(float, y[n].split('/'))
       소수자릿수 = 0
@@ -49,12 +50,11 @@ while True: # 반복
           if o[1] != 0:
             소수자릿수 += len(str(m))-1-str(m).index('.')
       분자, 분모 = int(10**소수자릿수*분자), int(10**소수자릿수*분모)
-    else:
-      if '/' in y[n]:
+    elif '/' in y[n]:
         분자, 분모 = map(int, y[n].split('/'))
-      elif not '.' in y[n]:
+    elif not '.' in y[n]:
         분자, 분모 = int(y[n]), 1
-      else: 
+    else: 
         분모 = 10*(len(str(y[n]))-1-str(y[n]).index('.'))
         분자 = int(y[n].replace('.',''))
     y[n] = f(분자, 분모)
