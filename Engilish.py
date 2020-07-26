@@ -51,11 +51,11 @@ while True: # repeat
       numerator, denominator = int(10**decimal_digit*numerator), int(10**decimal_digit*denominator)
     elif '/' in y[n]:
         numerator, denominator = map(int, y[n].split('/'))
-    elif not '.' in y[n]:
-        numerator, denominator = int(y[n]), 1
-    else: 
-        denominator = 10*(len(str(y[n]))-1-str(y[n]).index('.'))
+    elif '.' in y[n]:
         numerator = int(y[n].replace('.',''))
+        denominator = 10*(len(str(y[n]))-1-str(y[n]).index('.'))
+    else: 
+        numerator, denominator = int(y[n]), 1
     y[n] = f(numerator, denominator)
   # 각 항의 계수를 분수꼴로 바꾸기 
 
