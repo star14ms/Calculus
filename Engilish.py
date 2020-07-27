@@ -15,27 +15,27 @@ while True: # repeat
 
   if y == []: rational_num = False
 
-  for n in range(len(y)):
-    conversion = str.maketrans('1234567890/.', '111111111111')
-    for m in range(len(y[n])):
-      rational_material = y[n][m].translate(conversion)
-      if not '1' in rational_material: rational_num = False
+  for term in y:
+    conversion = str.maketrans('1234567890/.', 'oooooooooooo')
+    for m in range(len(term)):
+      rational_material = term[m].translate(conversion)
+      if not 'o' in rational_material: rational_num = False
 
-    if '/' in y[n]:
-      if y[n].count('/') != 1: rational_num = False
-      if y[n].index('/') == 0 | y[n].index('/') == len(y[n])-1: rational_num = False
+    if '/' in term:
+      if term.count('/') != 1: rational_num = False
+      if term.index('/') == 0 | term.index('/') == len(term)-1: rational_num = False
       if rational_num:
-        numerator, denominator = map(float, y[n].split('/'))
+        numerator, denominator = map(float, term.split('/'))
         if denominator == 0: rational_num = False
     
-    if '.' in y[n]:
-      if ('/' in y[n]) & rational_num:
-        a, b = y[n].split('/')
+    if '.' in term:
+      if ('/' in term) & rational_num:
+        a, b = term.split('/')
         for m in (a, b):
           if m.count('.') > 1: rational_num = False
       else:  
-        if y[n].count('.') != 1: rational_num = False
-        if y[n].index('.') == 0 | y[n].index('.') == len(y[n])-1: rational_num = False
+        if term.count('.') != 1: rational_num = False
+        if term.index('.') == 0 | term.index('.') == len(term)-1: rational_num = False
 
   if rational_num == False: continue
   # 입력x | 계수 하나라도 (유리수x | denominator=0) :초기화
@@ -52,10 +52,10 @@ while True: # repeat
     elif '/' in y[n]:
         numerator, denominator = map(int, y[n].split('/'))
     elif '.' in y[n]:
-        numerator = int(y[n].replace('.',''))
-        denominator = 10*(len(str(y[n]))-1-str(y[n]).index('.'))
+        numerator, denominator = int(y[n].replace('.','')), 10*(len(str(y[n]))-1-str(y[n]).index('.'))
     else: 
         numerator, denominator = int(y[n]), 1
+
     y[n] = f(numerator, denominator)
   # 각 항의 계수를 분수꼴로 바꾸기 
 
@@ -74,7 +74,7 @@ while True: # repeat
       term = str(y[n]) + 'x'
     else :
       term = str(y[n]) + 'x^' + str(len(y)-1-n)
-    # 변수기호, 그 변수의 지수 추가 (len(y)-1-n : 내림차순)
+    # 변수기호, 그 변수의 지수 추가 (len(y)-1-n : 차수)
 
     term = term.replace('-',' - ')
     if n == 0 : 
@@ -110,14 +110,14 @@ while True: # repeat
   # 미분을 골랐을 때
     print("f'(x)=", end='')
     # "f'(x)=" 출력
-  
     if len(y) == 1: 
       print(' 0'); continue
     # 항이 하나면 0 출력
 
     for n in range(len(y)-1):
     # 각 항의 계수에서
-      y[n] = (len(y)-1-n) * y[n]
+      degree = len(y)-1-n
+      y[n] = degree * y[n]
       # 새 계수 = 차수 * 계수
 
       if y[n] == 0:   
@@ -137,7 +137,7 @@ while True: # repeat
       elif n == len(y)-3:
         y[n] = str(y[n]) + 'x'
       else:
-        y[n] = str(y[n]) + 'x^' + str(len(y)-1-n-1)
+        y[n] = str(y[n]) + 'x^' + str(degree-1)
       # 변수기호, -1한 지수 추가
 
       y[n] = y[n].replace('-',' - ')
@@ -160,7 +160,8 @@ while True: # repeat
 
     for n in range(len(y)):
     # 각 항의 계수에서
-      y[n] = y[n] / (len(y)-1-n+1)
+      degree = len(y)-1-n
+      y[n] = y[n] / (degree+1)
       # 새 계수 = 계수 / 차수 + 1
 
       if y[n] == 0: 
@@ -178,7 +179,7 @@ while True: # repeat
       if n == len(y)-1:
         y[n] = str(y[n]) + 'x'
       else :
-        y[n] = str(y[n]) + 'x^' + str(len(y)-1-n+1)
+        y[n] = str(y[n]) + 'x^' + str(degree+1)
 
       y[n] = y[n].replace('-',' - ')
       if n == 0 : 
@@ -196,8 +197,7 @@ while True: # repeat
   elif c == '3' :
   # 정적분을 골랐을 때
     x = input('range [a, b] : ').split()
-    # 범위 a, b 입력받음 ( a = x[0], b = x[1] )
-
+    # 범위 a, b 입력받음
     if len(x) != 2 :continue
     elif x[0].isalpha() | x[1].isalpha():continue
     # Initialization 값을 '2개' 입력받지 않거나 글자만 있으면
@@ -213,27 +213,30 @@ while True: # repeat
           x[n] = int(x[n])
     # a, b를 분수, 실수, 정수꼴로 바꾸기 
 
-    print('[F(x)]{},{} = '.format(x[0], x[1]), end='')
+    a, b = x[0], x[1]
+
+    print('[F(x)]{},{} = '.format(a, b), end='')
     # '[F(x)]a, b =' 출력 
 
     value = 0
     for n in range(len(y)):
-      y[n] = y[n] / (len(y)-1-n+1)
-      y[n] = y[n] * (x[1]**(len(y)-1-n+1) - x[0]**(len(y)-1-n+1))
+      degree = len(y)-1-n
+      y[n] = y[n] / (degree+1)
+      y[n] = y[n] * (b**(degree+1) - a**(degree+1))
       value = value + y[n]
     # value = 각 항을 정적분하고 더한 value
 
     def Convertible_to_decimal(Share): 
       for prime_number in (2, 5): 
         while Share % prime_number == 0: 
-          Share = int(Share / prime_number) 
+          Share = Share / prime_number
       if Share == 1:
         return True 
       else : 
         return False 
     # 분수를 소수로 나타낼 rational_number 있나 판별하는 함수 정의
-
-    if Convertible_to_decimal(value.denominator) & value.denominator != 1: 
+    
+    if Convertible_to_decimal(value.denominator) & (value.denominator != 1): 
       print(float(value))
     else :
       print(value)
