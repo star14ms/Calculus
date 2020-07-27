@@ -1,61 +1,61 @@
 from fractions import Fraction as f
-# 분수꼴 추가히기
-print('미적분 너무 쉬워!\n')
-print('함수의 각 항의 계수를 내림차순으로 쓰시오')
-print('(띄어쓰기로 구분)')
-print('(중간에 없는 항도 0을 써서 표시)')
-# 설명 출력
+# to add fractional form
+print('Calculus Too Easy!\n')
+print('Type the coefficients for each term in descending order') 
+print('(Separate by spacing)')
+print('(No Terms: type a coefficient of zero)')
+# To print out descriptions
 ################################################################################################
-while True: # 반복
-  print('ㅡ' * 16) # 줄 치기
+while True: # repeat
+  print('ㅡ' * 16) # draw a line
   y = input().split()
-  # 함수의 각 항의 계수 입력 받기
+  # Receive Input:coefficient of each terms of a function
 
-  유리수 = True
+  rational_num = True
 
-  if y == []: 유리수 = False
+  if y == []: rational_num = False
 
-  for 항 in y:
-    변환 = str.maketrans('1234567890-/.', 'ooooooooooooo')
-    for m in range(len(항)):
-      유리수_재료 = 항[m].translate(변환)
-      if not 'o' in 유리수_재료: 유리수 = False
+  for term in y:
+    conversion = str.maketrans('1234567890-/.', 'ooooooooooooo')
+    for m in range(len(term)):
+      rational_material = term[m].translate(conversion)
+      if not 'o' in rational_material: rational_num = False
 
-    if '/' in 항:
-      if 항.count('/') != 1: 유리수 = False
-      if 항.index('/') == 0 | 항.index('/') == len(항)-1: 유리수 = False
-      if 유리수:
-        분자, 분모 = map(float, 항.split('/'))
-        if 분모 == 0: 유리수 = False
+    if '/' in term:
+      if term.count('/') != 1: rational_num = False
+      if term.index('/') == 0 | term.index('/') == len(term)-1: rational_num = False
+      if rational_num:
+        numerator, denominator = map(float, term.split('/'))
+        if denominator == 0: rational_num = False
     
-    if '.' in 항:
-      if ('/' in 항) & 유리수:
-        분자, 분모 = 항.split('/')
-        if 분자.count('.') == 2 | 분모.count('.') == 2: 유리수 = False
+    if '.' in term:
+      if ('/' in term) & rational_num:
+        a, b = term.split('/')
+        if numerator.count('.') == 2 | denominator.count('.') == 2: rational_num = False
       else:  
-        if 항.count('.') != 1: 유리수 = False
-        if 항.index('.') == 0 | 항.index('.') == len(항)-1: 유리수 = False
+        if term.count('.') != 1: rational_num = False
+        if term.index('.') == 0 | term.index('.') == len(term)-1: rational_num = False
 
-  if 유리수 == False: continue
-  # 입력x | 계수 하나라도 (유리수x | 분모=0) :초기화
+  if rational_num == False: continue
+  # 입력x | 계수 하나라도 (유리수x | denominator=0) :초기화
 
-  for n in range(len(y)):
+  for n in range(len(y)): 
     if '/' in y[n] and '.' in y[n]:
-      분자, 분모 = map(float, y[n].split('/'))
-      소수자릿수 = 0
-      for m in (분자, 분모):
+      numerator, denominator = map(float, y[n].split('/'))
+      decimal_digit = 0
+      for m in (numerator, denominator):
           o = str(m).split('.')
           if o[1] != 0:
-            소수자릿수 += len(str(m))-1-str(m).index('.')
-      분자, 분모 = int(10**소수자릿수*분자), int(10**소수자릿수*분모)
+            decimal_digit += len(str(m))-1-str(m).index('.')
+      numerator, denominator = int(10**decimal_digit*numerator), int(10**decimal_digit*denominator)
     elif '/' in y[n]:
-        분자, 분모 = map(int, y[n].split('/'))
+        numerator, denominator = map(int, y[n].split('/'))
     elif '.' in y[n]:
-        분자, 분모 = int(y[n].replace('.','')), 10*(len(str(y[n]))-1-str(y[n]).index('.'))
+        numerator, denominator = int(y[n].replace('.','')), 10*(len(str(y[n]))-1-str(y[n]).index('.'))
     else: 
-        분자, 분모 = int(y[n]), 1
-        
-    y[n] = f(분자, 분모)
+        numerator, denominator = int(y[n]), 1
+
+    y[n] = f(numerator, denominator)
   # 각 항의 계수를 분수꼴로 바꾸기 
 
   print('f(x) =', end='') 
@@ -77,38 +77,38 @@ while True: # 반복
 
     z = {}
     # 출력을 위해 변환시킨 항을 저장할 곳
-    
-    if (y[n] == 1 or y[n] == -1) & (n != len(y)-1):
+
+    if (y[n] == 1 or y[n] == -1) & (n != len(y) - 1):
       z[n] = str(y[n]).replace('1','')
     else:
       z[n] = str(y[n])
     # 계수가 1 or -1이면 1생략 (상수항 제외)
 
-    def 부호_공백_추가(n):
-      z[n] = z[n].replace('-',' - ')
-      if n == 0 : 
-         z[n] = ' ' + z[n]
-      elif (not '-' in z[n]):
-         z[n] = ' + ' + z[n]
-    # 부호 & 공백을 추가하는 함수 정의
-
-    부호_공백_추가(n)
+  def adding_sign_space(n):
+    z[n] = z[n].replace('-',' - ')
+    if n == 0 : 
+      z[n] = ' ' + z[n]
+    elif (not '-' in z[n]):
+      z[n] = ' + ' + z[n]
+  # to definite a fuction adding sign & space
+ 
+    adding_sign_space(n)
     if n == len(y)-2:
-      z[n] = z[n] + 'x'
+      term = term + 'x'
     elif n != len(y)-1:
-      z[n] = z[n] + 'x^' + str(len(y)-1-n)
+      term = term + 'x^' + str(len(y)-1-n)
     # 변수기호, 그 변수의 지수 추가 (len(y)-1-n : 내림차순 차수)
 
     if n != len(y)-1: 
-      print(z[n], end='')
+      print(term, end='')
     else:
-      print(z[n])
+      print(term)
     # 출력
 
-  c = input('미분(1) | 부정적분(2) | 정적분(3) : ')
+  c = input('differential(1) | integral-indef(2), def(3): ')
   # 미분, 부정적분, 정적분 중 고르기
 ################################################################################################
-  if c == '미분' or c == '1' :
+  if c == '1' :
   # 미분을 골랐을 때
     print("f'(x)=", end='')
     # "f'(x)=" 출력
@@ -120,15 +120,15 @@ while True: # 반복
     for n in range(len(y)-1):
     # 각 항의 계수에서
       if y[n] == 0:   
-        if n != len(y)-2: 
-          continue
-        else: 
-          print()
-          continue
-      # 계수가 0이면 그 항은 생략 
- 
-      차수 = len(y)-1-n
-      y[n] = (len(y)-1-n) * y[n]
+          if n != len(y)-2: 
+            continue
+          else: 
+            print()
+            continue
+      # 계수가 0이면 그 항은 생략
+
+      degree = len(y)-1-n
+      y[n] = degree * y[n]
       # 새 계수 = 차수 * 계수
 
       if (y[n] == 1 or y[n] == -1) & (n != len(y)-2):
@@ -137,11 +137,11 @@ while True: # 반복
         z[n] = str(y[n])
       # 계수가 1 or -1이면 1생략 (상수항 제외)
 
-      부호_공백_추가(n)
+      adding_sign_space(n)
       if n == len(y)-3:
         z[n] = z[n] + 'x'
       elif n != len(y)-2:
-        z[n] = z[n] + 'x^' + str(차수-1)
+        z[n] = z[n] + 'x^' + str(degree-1)
       # 부호 & 공백 & 변수기호 & -1한 지수 추가
 
       if n != len(y)-2:
@@ -150,7 +150,7 @@ while True: # 반복
         print(z[n])
       # 출력
 ################################################################################################
-  elif c == '부정적분' or c == '2':
+  elif c == '2':
   # 부정적분을 골랐을 때
     print('F(x) =', end='')
     # 'F(x) =' 출력
@@ -169,8 +169,8 @@ while True: # 반복
           continue
       # 계수가 0이면 그 항은 생략
 
-      차수 = len(y)-1-n
-      y[n] = y[n] / (차수+1)
+      degree = len(y)-1-n
+      y[n] = y[n] / (degree+1)
       # 새 계수 = 계수 / (차수 + 1)
 
       if y[n] == 1 or y[n] == -1:
@@ -179,11 +179,11 @@ while True: # 반복
         z[n] = str(y[n])
       # 계수가 1 or -1이면 1생략
         
-      부호_공백_추가(n)
+      adding_sign_space(n)
       if n == len(y)-1:
         z[n] = z[n] + 'x'
       else :
-        z[n] = z[n] + 'x^' + str(차수+1)
+        z[n] = z[n] + 'x^' + str(degree+1)
       # 부호 & 공백 & 변수기호 & +1한 지수 추가
 
       if n != len(y)-1:
@@ -192,50 +192,50 @@ while True: # 반복
         print(z[n],'+ C')
       # 출력 (적분상수 포함)
 ################################################################################################
-  elif c == '정적분' or c == '3' :
+  elif c == '3' :
   # 정적분을 골랐을 때
-
-    x = input('범위 [a, b] : ').split()
+  
+    x = input('range [a, b] : ').split()
     # 범위 a, b 입력받음
     if len(x) != 2 :continue
     elif x[0].isalpha() | x[1].isalpha():continue
-    # 값을 '2개' 입력받지 않거나 글자만 있으면 초기화
+    # Initialization 값을 '2개' 입력받지 않거나 글자만 있으면
 
     for n in range(2): 
       if '/' in x[n]:
-        분자, 분모 = map(int, x[n].split('/'))
-        x[n] = f(분자, 분모)
+        numerator, denominator = map(int, x[n].split('/'))
+        x[n] = f(numerator, denominator)
       else:
         if '.' in x[n] : 
           x[n] = float(x[n])
         else: 
           x[n] = int(x[n])
     # a, b를 분수, 실수, 정수꼴로 바꾸기 
-    
+
     a, b = x[0], x[1]
     print('[F(x)]{},{} = '.format(a, b), end='')
     # '[F(x)]a, b =' 출력 
 
-    값 = 0
+    value = 0
     for n in range(len(y)):
-      차수 = len(y)-1-n
-      y[n] = y[n] / (차수+1)
-      y[n] = y[n] * (b**(차수+1) - a**(차수+1))
-      값 = 값 + y[n]
-    # 값 = 각 항을 정적분하고 더한 값
+      degree = len(y)-1-n
+      y[n] = y[n] / (degree+1)
+      y[n] = y[n] * (b**(degree+1) - a**(degree+1))
+      value = value + y[n]
+    # value = 각 항을 정적분하고 더한 value
 
-    def 소수변환가능(몫): 
-      for 소수 in (2, 5): 
-        while 몫 % 소수 == 0: 
-          몫 = 몫 / 소수 
-      if 몫 == 1:
+    def Convertible_to_decimal(Share): 
+      for prime_number in (2, 5): 
+        while Share % prime_number == 0: 
+          Share = Share / prime_number
+      if Share == 1:
         return True 
       else : 
         return False 
-    # 분수를 소수로 나타낼 유리수 있나 판별하는 함수 정의
-
-    if 소수변환가능(값.denominator) & (값.denominator != 1): 
-      print(float(값))
-    else:
-      print(값)
-    # 값을, 소수꼴로 바꿀 유리수 있으면 바꾸고, 출력
+    # 분수를 소수로 나타낼 rational_number 있나 판별하는 함수 정의
+    
+    if Convertible_to_decimal(value.denominator) & (value.denominator != 1): 
+      print(float(value))
+    else :
+      print(value)
+    # 값을, 소수꼴로 바꿀 rational_number 있으면 바꾸고, 출력
