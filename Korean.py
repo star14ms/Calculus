@@ -64,6 +64,18 @@ while True: # 반복
 
   for n in range(len(y)):
   # 각 항의 계수에서
+    if float(y[n]) == 0:
+      if n != len(y)-1:
+        continue
+      else:
+        if len(y) == 1:
+          print(' 0')
+          continue
+        else: 
+          print()
+          continue
+    # 항이 0이면 생략
+
     if (y[n] == f(1, 1)) & (n != len(y) - 1):
       y[n] = ''
     # 계수가 1인 항은 1생략 (len(y)-1 : 상수항)
@@ -84,20 +96,11 @@ while True: # 반복
     # 부호, 공백 추가
 
     x앞쪽 = 항.split('x')
-    if n == 0 :
-      if x앞쪽[0] == ' 0':
-        continue
     if n != len(y)-1: 
-      if x앞쪽[0] == ' + 0':
-        continue
-      else: 
-        print(항, end='')
+      print(항, end='')
     else:
-      if x앞쪽[0] == ' + 0': 
-        print()
-      else:
-        print(항)
-    # 출력 (항이 0이면 생략)
+      print(항)
+    # 출력
 
     if y[n] == '':
       y[n] = f(1, 1)
@@ -110,6 +113,7 @@ while True: # 반복
   # 미분을 골랐을 때
     print("f'(x)=", end='')
     # "f'(x)=" 출력
+
     if len(y) == 1: 
       print(' 0'); continue
     # 항이 하나면 0 출력
@@ -121,11 +125,11 @@ while True: # 반복
       # 새 계수 = 차수 * 계수
 
       if y[n] == 0:   
-          if n == len(y)-1: 
-            print()
-            continue
-          else: 
-            continue
+        if n != len(y)-2: 
+          continue
+        else: 
+          print()
+          continue
       # 계수가 0이면 그 항은 생략
 
       if (y[n] == f(1, 1)) & (n != len(y)-2):
@@ -157,6 +161,10 @@ while True: # 반복
   # 부정적분을 골랐을 때
     print('F(x) =', end='')
     # 'F(x) =' 출력
+
+    if (len(y) == 1) & (y[0] == 0):
+      print(' 0'); continue
+    # 항이 0 하나면 0 출력
 
     for n in range(len(y)):
     # 각 항의 계수에서
@@ -212,9 +220,8 @@ while True: # 반복
         else: 
           x[n] = int(x[n])
     # a, b를 분수, 실수, 정수꼴로 바꾸기 
-
+    
     a, b = x[0], x[1]
-
     print('[F(x)]{},{} = '.format(a, b), end='')
     # '[F(x)]a, b =' 출력 
 
