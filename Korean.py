@@ -16,7 +16,7 @@ while True: # 반복
   if y == []: 유리수 = False
 
   for 항 in y:
-    변환 = str.maketrans('1234567890/.', 'oooooooooooo')
+    변환 = str.maketrans('1234567890-/.', 'ooooooooooooo')
     for m in range(len(항)):
       유리수_재료 = 항[m].translate(변환)
       if not 'o' in 유리수_재료: 유리수 = False
@@ -40,7 +40,6 @@ while True: # 반복
   # 입력x | 계수 하나라도 (유리수x | 분모=0) :초기화
 
   for n in range(len(y)):
-
     if '/' in y[n] and '.' in y[n]:
       분자, 분모 = map(float, y[n].split('/'))
       소수자릿수 = 0
@@ -76,35 +75,35 @@ while True: # 반복
           continue
     # 항이 0이면 생략
 
-    if (y[n] == f(1, 1)) & (n != len(y) - 1):
-      y[n] = ''
-    # 계수가 1인 항은 1생략 (len(y)-1 : 상수항)
-
-    if n == len(y)-1:
-      항 = str(y[n])
-    elif n == len(y)-2:
-      항 = str(y[n]) + 'x'
-    else :
-      항 = str(y[n]) + 'x^' + str(len(y)-1-n)
-    # 변수기호, 그 변수의 지수 추가 (len(y)-1-n : 차수)
-
-    항 = 항.replace('-',' - ')
-    if n == 0 : 
-        항 = ' ' + 항
-    elif (not '-' in 항):
-      항 = ' + ' + 항
-    # 부호, 공백 추가
-
-    x앞쪽 = 항.split('x')
-    if n != len(y)-1: 
-      print(항, end='')
+    z = {}
+    # 출력을 위해 변환시킨 항을 저장할 곳
+    
+    if (y[n] == 1 or y[n] == -1) & (n != len(y)-1):
+      z[n] = str(y[n]).replace('1','')
     else:
-      print(항)
-    # 출력
+      z[n] = str(y[n])
+    # 계수가 1 or -1이면 1생략 (상수항 제외)
 
-    if y[n] == '':
-      y[n] = f(1, 1)
-    # 위에서 생략한 계수 1을 다시 1로 만들기
+    def 부호_공백_추가(n):
+      z[n] = z[n].replace('-',' - ')
+      if n == 0 : 
+         z[n] = ' ' + z[n]
+      elif (not '-' in z[n]):
+         z[n] = ' + ' + z[n]
+    # 부호 & 공백을 추가하는 함수 정의
+
+    부호_공백_추가(n)
+    if n == len(y)-2:
+      z[n] = z[n] + 'x'
+    elif n != len(y)-1:
+      z[n] = z[n] + 'x^' + str(len(y)-1-n)
+    # 변수기호, 그 변수의 지수 추가 (len(y)-1-n : 내림차순 차수)
+
+    if n != len(y)-1: 
+      print(z[n], end='')
+    else:
+      print(z[n])
+    # 출력
 
   c = input('미분(1) | 부정적분(2) | 정적분(3) : ')
   # 미분, 부정적분, 정적분 중 고르기
@@ -120,41 +119,35 @@ while True: # 반복
 
     for n in range(len(y)-1):
     # 각 항의 계수에서
-      차수 = len(y)-1-n
-      y[n] = (len(y)-1-n) * y[n]
-      # 새 계수 = 차수 * 계수
-
       if y[n] == 0:   
         if n != len(y)-2: 
           continue
         else: 
           print()
           continue
-      # 계수가 0이면 그 항은 생략
+      # 계수가 0이면 그 항은 생략 
+ 
+      차수 = len(y)-1-n
+      y[n] = (len(y)-1-n) * y[n]
+      # 새 계수 = 차수 * 계수
 
-      if (y[n] == f(1, 1)) & (n != len(y)-2):
-        y[n] = ''
-      # 계수가 1이면 1생략
+      if (y[n] == 1 or y[n] == -1) & (n != len(y)-2):
+        z[n] = str(y[n]).replace('1','')
+      else: 
+        z[n] = str(y[n])
+      # 계수가 1 or -1이면 1생략 (상수항 제외)
 
-      if n == len(y)-2:
-        y[n] = str(y[n])
-      elif n == len(y)-3:
-        y[n] = str(y[n]) + 'x'
-      else:
-        y[n] = str(y[n]) + 'x^' + str(차수-1)
-      # 변수기호, -1한 지수 추가
-
-      y[n] = y[n].replace('-',' - ')
-      if n == 0 : 
-        y[n] = ' ' + y[n]
-      elif (not '-' in y[n]):
-        y[n] = ' + ' + y[n]
-      # 부호, 공백 추가
+      부호_공백_추가(n)
+      if n == len(y)-3:
+        z[n] = z[n] + 'x'
+      elif n != len(y)-2:
+        z[n] = z[n] + 'x^' + str(차수-1)
+      # 부호 & 공백 & 변수기호 & -1한 지수 추가
 
       if n != len(y)-2:
-        print(y[n], end='')
+        print(z[n], end='')
       else: 
-        print(y[n])
+        print(z[n])
       # 출력
 ################################################################################################
   elif c == '부정적분' or c == '2':
@@ -168,42 +161,40 @@ while True: # 반복
 
     for n in range(len(y)):
     # 각 항의 계수에서
-      차수 = len(y)-1-n
-      y[n] = y[n] / (차수+1)
-      # 새 계수 = 계수 / 차수 + 1
-
       if y[n] == 0: 
-        if n == len(y)-1: 
-          print()
+        if n != len(y)-1: 
           continue
         else: 
+          print()
           continue
       # 계수가 0이면 그 항은 생략
 
-      if y[n] == f(1, 1):
-        y[n] = ''
-      # 계수가 1이면 1생략
-        
-      if n == len(y)-1:
-        y[n] = str(y[n]) + 'x'
-      else :
-        y[n] = str(y[n]) + 'x^' + str(차수+1)
+      차수 = len(y)-1-n
+      y[n] = y[n] / (차수+1)
+      # 새 계수 = 계수 / (차수 + 1)
 
-      y[n] = y[n].replace('-',' - ')
-      if n == 0 : 
-        y[n] = ' ' + y[n]
-      elif (not '-' in y[n]):
-        y[n] = ' + ' + y[n]
-      # 변수기호, +1한 지수 추가
+      if y[n] == 1 or y[n] == -1:
+        z[n] = str(y[n]).replace('1','')
+      else: 
+        z[n] = str(y[n])
+      # 계수가 1 or -1이면 1생략
+        
+      부호_공백_추가(n)
+      if n == len(y)-1:
+        z[n] = z[n] + 'x'
+      else :
+        z[n] = z[n] + 'x^' + str(차수+1)
+      # 부호 & 공백 & 변수기호 & +1한 지수 추가
 
       if n != len(y)-1:
-        print(y[n], end='')
+        print(z[n], end='')
       else: 
-        print(y[n],'+ C')
+        print(z[n],'+ C')
       # 출력 (적분상수 포함)
 ################################################################################################
   elif c == '정적분' or c == '3' :
   # 정적분을 골랐을 때
+
     x = input('범위 [a, b] : ').split()
     # 범위 a, b 입력받음
     if len(x) != 2 :continue
