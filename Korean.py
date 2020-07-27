@@ -15,27 +15,26 @@ while True: # 반복
 
   if y == []: 유리수 = False
 
-  for n in range(len(y)):
-    변환 = str.maketrans('1234567890/.', '111111111111')
-    for m in range(len(y[n])):
-      유리수_재료 = y[n][m].translate(변환)
-      if not '1' in 유리수_재료: 유리수 = False
+  for 항 in y:
+    변환 = str.maketrans('1234567890/.', 'oooooooooooo')
+    for m in range(len(항)):
+      유리수_재료 = 항[m].translate(변환)
+      if not 'o' in 유리수_재료: 유리수 = False
 
-    if '/' in y[n]:
-      if y[n].count('/') != 1: 유리수 = False
-      if y[n].index('/') == 0 | y[n].index('/') == len(y[n])-1: 유리수 = False
+    if '/' in 항:
+      if 항.count('/') != 1: 유리수 = False
+      if 항.index('/') == 0 | 항.index('/') == len(항)-1: 유리수 = False
       if 유리수:
-        분자, 분모 = map(float, y[n].split('/'))
+        분자, 분모 = map(float, 항.split('/'))
         if 분모 == 0: 유리수 = False
     
-    if '.' in y[n]:
-      if ('/' in y[n]) & 유리수:
-        a, b = y[n].split('/')
-        for m in (a, b):
-          if m.count('.') > 1: 유리수 = False
+    if '.' in 항:
+      if ('/' in 항) & 유리수:
+        분자, 분모 = 항.split('/')
+        if 분자.count('.') == 2 | 분모.count('.') == 2: 유리수 = False
       else:  
-        if y[n].count('.') != 1: 유리수 = False
-        if y[n].index('.') == 0 | y[n].index('.') == len(y[n])-1: 유리수 = False
+        if 항.count('.') != 1: 유리수 = False
+        if 항.index('.') == 0 | 항.index('.') == len(항)-1: 유리수 = False
 
   if 유리수 == False: continue
   # 입력x | 계수 하나라도 (유리수x | 분모=0) :초기화
@@ -53,10 +52,10 @@ while True: # 반복
     elif '/' in y[n]:
         분자, 분모 = map(int, y[n].split('/'))
     elif '.' in y[n]:
-        분자 = int(y[n].replace('.',''))
-        분모 = 10*(len(str(y[n]))-1-str(y[n]).index('.'))
+        분자, 분모 = int(y[n].replace('.','')), 10*(len(str(y[n]))-1-str(y[n]).index('.'))
     else: 
         분자, 분모 = int(y[n]), 1
+        
     y[n] = f(분자, 분모)
   # 각 항의 계수를 분수꼴로 바꾸기 
 
@@ -75,7 +74,7 @@ while True: # 반복
       항 = str(y[n]) + 'x'
     else :
       항 = str(y[n]) + 'x^' + str(len(y)-1-n)
-    # 변수기호, 그 변수의 지수 추가 (len(y)-1-n : 내림차순)
+    # 변수기호, 그 변수의 지수 추가 (len(y)-1-n : 차수)
 
     항 = 항.replace('-',' - ')
     if n == 0 : 
@@ -111,13 +110,13 @@ while True: # 반복
   # 미분을 골랐을 때
     print("f'(x)=", end='')
     # "f'(x)=" 출력
-  
     if len(y) == 1: 
       print(' 0'); continue
     # 항이 하나면 0 출력
 
     for n in range(len(y)-1):
     # 각 항의 계수에서
+      차수 = len(y)-1-n
       y[n] = (len(y)-1-n) * y[n]
       # 새 계수 = 차수 * 계수
 
@@ -138,7 +137,7 @@ while True: # 반복
       elif n == len(y)-3:
         y[n] = str(y[n]) + 'x'
       else:
-        y[n] = str(y[n]) + 'x^' + str(len(y)-1-n-1)
+        y[n] = str(y[n]) + 'x^' + str(차수-1)
       # 변수기호, -1한 지수 추가
 
       y[n] = y[n].replace('-',' - ')
@@ -161,7 +160,8 @@ while True: # 반복
 
     for n in range(len(y)):
     # 각 항의 계수에서
-      y[n] = y[n] / (len(y)-1-n+1)
+      차수 = len(y)-1-n
+      y[n] = y[n] / (차수+1)
       # 새 계수 = 계수 / 차수 + 1
 
       if y[n] == 0: 
@@ -179,7 +179,7 @@ while True: # 반복
       if n == len(y)-1:
         y[n] = str(y[n]) + 'x'
       else :
-        y[n] = str(y[n]) + 'x^' + str(len(y)-1-n+1)
+        y[n] = str(y[n]) + 'x^' + str(차수+1)
 
       y[n] = y[n].replace('-',' - ')
       if n == 0 : 
@@ -197,8 +197,7 @@ while True: # 반복
   elif c == '정적분' or c == '3' :
   # 정적분을 골랐을 때
     x = input('범위 [a, b] : ').split()
-    # 범위 a, b 입력받음 ( a = x[0], b = x[1] )
-
+    # 범위 a, b 입력받음
     if len(x) != 2 :continue
     elif x[0].isalpha() | x[1].isalpha():continue
     # 값을 '2개' 입력받지 않거나 글자만 있으면 초기화
@@ -214,13 +213,16 @@ while True: # 반복
           x[n] = int(x[n])
     # a, b를 분수, 실수, 정수꼴로 바꾸기 
 
-    print('[F(x)]{},{} = '.format(x[0], x[1]), end='')
+    a, b = x[0], x[1]
+
+    print('[F(x)]{},{} = '.format(a, b), end='')
     # '[F(x)]a, b =' 출력 
 
     값 = 0
     for n in range(len(y)):
-      y[n] = y[n] / (len(y)-1-n+1)
-      y[n] = y[n] * (x[1]**(len(y)-1-n+1) - x[0]**(len(y)-1-n+1))
+      차수 = len(y)-1-n
+      y[n] = y[n] / (차수+1)
+      y[n] = y[n] * (b**(차수+1) - a**(차수+1))
       값 = 값 + y[n]
     # 값 = 각 항을 정적분하고 더한 값
 
