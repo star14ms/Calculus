@@ -185,8 +185,8 @@ while True: # 반복
 
     for n in range(2): 
       if '/' in x[n]:
-        if '.' in str(y[n]):
-          numerator, denominator = map(float, y[n].split('/'))
+        if '.' in x[n]:
+          numerator, denominator = map(float, x[n].split('/'))
           decimal_digit = 0
           for m in (numerator, denominator):
               o = str(m).split('.')
