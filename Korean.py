@@ -19,7 +19,7 @@ def 유리수_판별(y):
       if 분모 == 0: return False # 분모 = 0
     
     if '.' in 항:
-      if ('/' in 항) & 유리수:
+      if '/' in 항:
         분자, 분모 = 항.split('/')
         if 분자.count('.') == 2 | 분모.count('.') == 2: return False
       else:  
