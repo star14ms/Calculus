@@ -33,17 +33,18 @@ def 계수_분수꼴로_바꾸기(n):
     분자, 분모 = map(float, y[n].split('/'))
     소수자릿수 = 0
     for m in (분자, 분모):
-        o = str(m).split('.')
-        if o[1] != 0:
-          소수자릿수 += len(str(m))-1-str(m).index('.')
+      o = str(m).split('.')
+      if o[1] != 0:
+        소수자릿수 += len(str(m))-1-str(m).index('.')
     분자, 분모 = int(10**소수자릿수*분자), int(10**소수자릿수*분모)
   elif '/' in y[n]:
-      분자, 분모 = map(int, y[n].split('/'))
+    분자, 분모 = map(int, y[n].split('/'))
   elif '.' in y[n]:
-      y[n] = float(y[n])
-      분자, 분모 = int(y[n].replace('.','')), 10*(len(str(y[n]))-1-str(y[n]).index('.'))
+    y[n] = float(y[n])
+    분자, 분모 = int(y[n].replace('.','')), 10*(len(str(y[n]))-1-str(y[n]).index('.'))
   else: 
-      분자, 분모 = int(y[n]), 1   
+    분자, 분모 = int(y[n]), 1   
+    
   y[n] = f(분자, 분모)
 # 항의 계수를 분수꼴로 바꾸기 
 
