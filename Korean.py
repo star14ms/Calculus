@@ -1,31 +1,31 @@
 # 본문 시작인 103줄부터 읽는 것을 추천 (102줄까지의 def구문은 모두 접었다가 하나씩 피면서 보기)
 
 from fractions import Fraction as f
-# 분수꼴 추가히기
+# to add fractional form
 ################################################################################################ 함수 정의 및 가져오기
-def 유리수_판별(y, 유리수):
-  if y == []: 유리수 = False # 입력 없음
+def 유리수_판별(y):
+  if y == []: return False # 입력 없음
   
   for 항 in y:
     변환 = str.maketrans('1234567890-/.', 'ooooooooooooo')
     for m in range(len(항)):
       유리수_재료 = 항[m].translate(변환)
-      if not 'o' in 유리수_재료: 유리수 = False
+      if not 'o' in 유리수_재료: return False
   
     if '/' in 항:
-      if 항.count('/') != 1: 유리수 = False
-      if 항.index('/') == 0 | 항.index('/') == len(항)-1: 유리수 = False
-      if 유리수:
-        분자, 분모 = map(float, 항.split('/'))
-        if 분모 == 0: 유리수 = False # 분모 = 0
+      if 항.count('/') != 1: return False
+      if 항.index('/') == 0 | 항.index('/') == len(항)-1: return False
+      분자, 분모 = map(float, 항.split('/'))
+      if 분모 == 0: return False # 분모 = 0
     
     if '.' in 항:
       if ('/' in 항) & 유리수:
         분자, 분모 = 항.split('/')
-        if 분자.count('.') == 2 | 분모.count('.') == 2: 유리수 = False
+        if 분자.count('.') == 2 | 분모.count('.') == 2: return False
       else:  
-        if 항.count('.') != 1: 유리수 = False
-        if 항.index('.') == 0 | 항.index('.') == len(항)-1: 유리수 = False
+        if 항.count('.') != 1: return False
+        if 항.index('.') == 0 | 항.index('.') == len(항)-1: return False      
+  return True
 # 입력이 없거나, 분모가 0일 때도 유리수 = False 
 
 def 계수_분수꼴로_바꾸기(n):
@@ -41,10 +41,10 @@ def 계수_분수꼴로_바꾸기(n):
     분자, 분모 = map(int, y[n].split('/'))
   elif '.' in y[n]:
     y[n] = float(y[n])
-    분자, 분모 = int(y[n].replace('.','')), 10*(len(str(y[n]))-1-str(y[n]).index('.'))
+    분자, 분모 = int(str(y[n]).replace('.','')), 10*(len(str(y[n]))-1-str(y[n]).index('.'))
   else: 
     분자, 분모 = int(y[n]), 1   
-    
+
   y[n] = f(분자, 분모)
 # 항의 계수를 분수꼴로 바꾸기 
 
@@ -110,16 +110,15 @@ print('(중간에 없는 항도 0을 써서 표시)')
 # 설명 출력
 
 while True: # 반복
+  c = 0  # 코드 진행 상태 : 입력 단계(0), 미분('1'), 부정적분('2'), 정적분('3')
   print('ㅡ' * 16) # 줄 치기
+  
+  y = input().split() 
+  # 함수의 각 항의 계수 입력 받기
 
-  y = input().split() # 함수의 각 항의 계수 입력 받기
-
-  유리수 = True
-  유리수_판별(y, 유리수)
-  if 유리수 == False: continue
+  if 유리수_판별(y) == False: continue
   # 유리수가 아니면 초기화
 
-  c = 0  # 코드 진행 상태 : 입력 단계(0), 미분('1'), 부정적분('2'), 정적분('3')
   z = {} # 출력을 위해 변환시킨 항을 저장할 곳
 
   print('f(x) =', end='') # 'f(x) =' 출력
@@ -181,9 +180,7 @@ while True: # 반복
     if len(x) != 2 :continue
     # 값을 2개를 받지 않았다면 초기화
 
-    유리수 = True
-    유리수_판별(x, 유리수)
-    if 유리수 == False: continue
+    if 유리수_판별(x) == False: continue
     # 유리수가 아니면 초기화
 
     for n in range(2): 
