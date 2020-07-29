@@ -19,7 +19,7 @@ def rational_discrimination(y):
       if denominator == 0: return False # denominator = 0
     
     if '.' in term:
-      if ('/' in term) & 유리수:
+      if '/' in term:
         numerator, denominator = term.split('/')
         if numerator.count('.') == 2 | denominator.count('.') == 2: return False
       else:  
