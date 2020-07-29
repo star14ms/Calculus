@@ -185,8 +185,8 @@ while True: # 반복
 
     for n in range(2): 
       if '/' in x[n]:
-        if '.' in str(y[n]):
-          분자, 분모 = map(float, y[n].split('/'))
+        if '.' in x[n]:
+          분자, 분모 = map(float, x[n].split('/'))
           소수자릿수 = 0
           for m in (분자, 분모):
               o = str(m).split('.')
