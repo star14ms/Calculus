@@ -6,6 +6,7 @@ Basic differential, definite_integral, definite_integral Calculation
 
 (미분, 적분(정적분,부정적분) 계산)
 
+
 range of a, b (ax^b):
 
 a : Rational num
@@ -17,5 +18,6 @@ b : 0, Natural num
 a : 유리수
 
 b : 0, 자연수)
+
 
 COMMENTS WELCOME
