@@ -1,4 +1,4 @@
-# 본문 시작인 103줄부터 읽는 것을 추천 (102줄까지의 def구문은 모두 접었다가 하나씩 피면서 보기)
+# 본문 시작인 106줄부터 읽는 것을 추천 (104줄까지의 def구문은 모두 접었다가 하나씩 피면서 보기)
 
 from fractions import Fraction as f
 # to add fractional form
