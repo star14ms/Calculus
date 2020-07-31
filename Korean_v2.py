@@ -1,4 +1,4 @@
-# 본문 시작인 90줄부터 읽는 것을 추천 (88줄까지의 def구문은 모두 접었다가 하나씩 피면서 보기)
+# 본문 시작인 103줄부터 읽는 것을 추천 (102줄까지의 def구문은 모두 접었다가 하나씩 피면서 보기)
 
 from fractions import Fraction as f
 # to add fractional form
@@ -21,10 +21,9 @@ def 유리수_판별(y):
         if 항.index('/') == 0 | 항.index('/') == len(항)-1: return False
         분자, 분모 = map(float, 항.split('/'))
         if 분모 == 0: return False # 분모 = 0
-    
-    if '.' in 항:
+    elif '.' in 항:
       if 항.count('.') != 1: return False
-      if 항.index('.') == 0 | 항.index('.') == len(항)-1: return False      
+      if 항.index('.') == 0 | 항.index('.') == len(항)-1: return False    
   return True
 # 입력이 없거나, 분모가 0일 때도 유리수 = False 
 
@@ -174,6 +173,7 @@ while True: # 반복
     # a, b를 분수, 소수, 정수꼴로 바꾸기 
     
     a, b = x[0], x[1]
+    
     값 = 0
     for n in range(len(y)):
       y[n] = y[n] / (n+1)
