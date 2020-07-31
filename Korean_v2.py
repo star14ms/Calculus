@@ -1,4 +1,4 @@
-# 본문 시작인 103줄부터 읽는 것을 추천 (102줄까지의 def구문은 모두 접었다가 하나씩 피면서 보기)
+# 본문 시작인 89줄부터 읽는 것을 추천 (87줄까지의 def구문은 모두 접었다가 하나씩 피면서 보기)
 
 from fractions import Fraction as f
 # to add fractional form
@@ -15,15 +15,15 @@ def 유리수_판별(y):
     if '/' in 항:
       if '.' in 항:
         분자, 분모 = 항.split('/')
-        if 분자.count('.') > 1 | 분모.count('.') > 1: return False
+        if 분자.count('.')>1 | 분모.count('.')>1: return False
       else:
-        if 항.count('/') != 1: return False
-        if 항.index('/') == 0 | 항.index('/') == len(항)-1: return False
+        if 항.count('/')!=1: return False
+        if 항.index('/')==0 | 항.index('/') == len(항)-1: return False
         분자, 분모 = map(float, 항.split('/'))
         if 분모 == 0: return False # 분모 = 0
     elif '.' in 항:
-      if 항.count('.') != 1: return False
-      if 항.index('.') == 0 | 항.index('.') == len(항)-1: return False    
+      if 항.count('.')!=1: return False
+      if 항.index('.')==0 | 항.index('.') == len(항)-1: return False  
   return True
 # 입력이 없거나, 분모가 0일 때도 유리수 = False 
 
@@ -48,7 +48,7 @@ def 계수_분수꼴로_바꾸기(y):
 
 def 계수1_생략(y):
   for n in range(len(y)):
-    if n!=0 and (y[n] == 1 or y[n] == -1):
+    if n!=0 and (y[n]==1 or y[n]==-1):
       항정보.append(str(y[n]).replace('1',''))
     else:
       항정보.append(str(y[n]))
@@ -78,9 +78,9 @@ def 인간맞춤형_식출력(y):
 
 def 소수변환가능(분모): 
   for 소수 in (2, 5): 
-    while 분모 % 소수 == 0: 
-      분모 = 분모 / 소수 
-  if 분모 == 1:
+    while 분모%소수 == 0: 
+      분모 = 분모/소수 
+  if 분모==1:
     return True 
   else : 
     return False 
