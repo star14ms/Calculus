@@ -9,7 +9,7 @@ Basic differential, definite_integral, definite_integral Calculation
 
 range of a, b (ax^b):
 
-a : Rational Num, b : 0, Natural Num
+a : Rational num, b : 0, Natural num
 
 (ax^b에서 a, b의 범위 :
 
