@@ -12,12 +12,13 @@ while True: # 반복
   
   y = input().split()
   y.reverse()
-  # 함수의 각 항의 계수 입력 받기, 오름차순으로 정렬
+  # 함수의 각 항의 계수 입력 받기(list), 오름차순으로 정렬
   
-  if Discrime_rational_num(y) == False: continue
+  if True_rational_num_list(y) == False: # list 원소들의 유리수 판별(y)
+    print('error: Not rational num!'); continue 
   # 유리수가 아니면 초기화
 
-  y = change_strs_fractions(y) # 각 항의 계수를 분수꼴로 전환
+  y = Change_strs_fractions(y) # 각 항의 계수를 분수꼴로 전환
 
   print('f(x) = ', end='')
   Print_human_tailored_expansion(y)
@@ -56,11 +57,12 @@ while True: # 반복
     x = input('renge [a, b] : ').split()
     # 범위 a, b 입력받기
 
-    if len(x) != 2 :continue
-    if Discrime_rational_num(x) == False: continue
+    if len(x) != 2 : continue
+    if True_rational_num_list(x) == False:
+      print('error: Not rational num!'); continue
     # 값을 2개 받지 않았거나, 유리수가 아니면 초기화
 
-    x = change_strs_fractions(x) # a, b를 분수꼴로 바꾸기 
+    x = Change_strs_fractions(x) # a, b를 분수꼴로 바꾸기 
     
     a, b = x[0], x[1]
     
@@ -72,9 +74,5 @@ while True: # 반복
     # value = 각 항을 정적분하고 모두 더한 value
     
     print('[F(x)]{},{} = '.format(a, b), end='')
-
-    if Convertible_to_decimal(value.denominator) and value.denominator != 1: 
-      print(float(value))
-    else:
-      print(value)
+    print(Change_to_decimal(value))
     # 값을, prime_num꼴로 바꿀 수 있으면 바꾸고, 출력
