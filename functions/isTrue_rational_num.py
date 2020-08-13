@@ -5,7 +5,8 @@ def isTrue_rational_num(string): # 유리수 판별
   for element in string:
     유리수_재료 = element.translate(변환)
     if not 'o' in 유리수_재료: return False
-
+    
+  if string.count('-') > 1: return False
   if '/' in string:
     if string.count('/')!=1: return False
     if '.' in string:
