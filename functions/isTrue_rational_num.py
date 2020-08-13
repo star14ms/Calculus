@@ -26,5 +26,5 @@ def isTrue_rational_num_list(list): # list의 각 원소에서 유리수 판별
   if list == []: return False # 입력 없음
 
   for string in list:
-    if True_rational_num(string) == False: return False
+    if isTrue_rational_num(string) == False: return False
   return True
