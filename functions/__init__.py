@@ -1,4 +1,4 @@
-from .Change_str_num import *
-from .Change_to_decimal import *
+from .change_str_num import *
+from .change_to_decimal import *
 from .isTrue_rational_num import *
-from .Print_human_tailored_expansion import *
+from .print_human_tailored_expansion import *
