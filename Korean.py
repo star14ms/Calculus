@@ -14,7 +14,7 @@ while True: # 반복
   y.reverse()
   # 함수의 각 항의 계수 입력 받기(list), 오름차순으로 정렬
   
-  if True_rational_num_list(y) == False: # list 원소들의 유리수 판별(y)
+  if isTrue_rational_num_list(y) == False: # list 원소들의 유리수 판별(y)
     print('error: Not rational num!'); continue
   # 유리수가 아니면 초기화
 
@@ -58,7 +58,7 @@ while True: # 반복
     # 범위 a, b 입력받기
 
     if len(x) != 2 : continue 
-    if True_rational_num_list(x) == False: 
+    if isTrue_rational_num_list(x) == False: 
       print('error: Not rational num!'); continue
     # 값을 2개 받지 않았거나, 유리수가 아니면 초기화
 
