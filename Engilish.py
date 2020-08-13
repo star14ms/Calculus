@@ -10,18 +10,18 @@ while True: # 반복
 ################################################################################ 입력 단계
   c = 0  # 코드 진행 상태 : 입력 단계(0), 미분('1'), 부정적분('2'), 정적분('3')
   
-  y = input().split()
+  y = input('Coefficients : ').split()
   y.reverse()
   # 함수의 각 항의 계수 입력 받기(list), 오름차순으로 정렬
   
   if isTrue_rational_num_list(y) == False: # list 원소들의 유리수 판별(y)
-    print('error: Not rational num!'); continue 
+    print('Error: not rational-num!'); continue 
   # 유리수가 아니면 초기화
 
   y = Change_strs_fractions(y) # 각 항의 계수를 분수꼴로 전환
 
   print('f(x) = ', end='')
-  Print_human_tailored_expansion(y)
+  print(Change_human_tailored_expression(y))
 
   c = input('differential(1) | integral-indef(2), def(3): ')
   # 미분, 부정적분, 정적분 중 고르기
@@ -36,7 +36,7 @@ while True: # 반복
     del y[0] # 상수항 사라짐
 
     print("f'(x)= ", end='')
-    Print_human_tailored_expansion(y)
+    print(Change_human_tailored_expression(y))
 ################################################################################ 부정적분
   if c == 'integral-indef' or c == '2': # 부정적분을 골랐을 때
 
@@ -50,7 +50,7 @@ while True: # 반복
     y.reverse()
 
     print('F(x) = ', end='')
-    Print_human_tailored_expansion(y)
+    print(Change_human_tailored_expression(y))
 ################################################################################ 정적분
   if c == 'integral-def' or c == '3': # 정적분을 골랐을 때
 
@@ -59,7 +59,7 @@ while True: # 반복
 
     if len(x) != 2 : continue
     if isTrue_rational_num_list(x) == False:
-      print('error: Not rational num!'); continue
+      print('Error: not rational-num!'); continue
     # 값을 2개 받지 않았거나, 유리수가 아니면 초기화
 
     x = Change_strs_fractions(x) # a, b를 분수꼴로 바꾸기 
