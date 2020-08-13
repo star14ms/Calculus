@@ -1,4 +1,4 @@
-def True_rational_num(string): # 유리수 판별
+def isTrue_rational_num(string): # 유리수 판별
   if string == '': return False # 입력 없음
 
   변환 = str.maketrans('1234567890-/.', 'ooooooooooooo')
@@ -22,7 +22,7 @@ def True_rational_num(string): # 유리수 판별
 # 입력이 없거나, 분모가 0일 때도 유리수 = False 
 
 # 응용 1
-def True_rational_num_list(list): # list의 각 원소에서 유리수 판별
+def isTrue_rational_num_list(list): # list의 각 원소에서 유리수 판별
   if list == []: return False # 입력 없음
 
   for string in list:
