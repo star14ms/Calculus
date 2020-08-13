@@ -1,6 +1,7 @@
 # terms = 식의 각 항의 계수들 (오름차순, list)
 
 항정보 = []  # 출력을 위해 변환시킨 항을 저장할 곳
+식 = []
 
 def 계수1_생략(terms):
   for n in range(len(terms)):
@@ -23,11 +24,13 @@ def 계수0_생략(terms):
     if 항정보[len(terms)-1-n].find('0')==0:
       del 항정보[len(terms)-1-n]
 
-def Print_human_tailored_expansion(terms): # 인간맞춤형 식 출력
+def Change_human_tailored_expression(terms): # 인간맞춤형 식 출력
   계수1_생략(terms)
   x기호_지수_추가(terms)
   제곱01_생략(terms)
   계수0_생략(terms)
   항정보.reverse()
-  print('+'.join(항정보).replace('+-','-').replace('-',' - ').replace('+',' + ').lstrip(' '))
+  del 식[:]
+  식.extend(항정보)
   del 항정보[:]
+  return '+'.join(식).replace('+-','-').replace('-',' - ').replace('+',' + ').lstrip(' ')
