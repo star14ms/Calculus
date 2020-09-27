@@ -1,10 +1,10 @@
 # Calculus Calculator!
 # (미적분 계산기!)
 ---
-### Basic differential, indefinite_integral, definite_integral Calculation 
-### (미분, 적분(정적분,부정적분) 계산)
+### Simple differential, indefinite_integral, definite_integral Calculation 
+### (간단한 미분, 적분(정적분,부정적분) 계산)
 ---
-### range of a, b (ax^b) (ax^b에서 a, b의 범위) : 
+### range of value a, b (ax^b) (ax^b에서 a, b의 범위) : 
 ### a - Rational num (유리수), 
 ### b - 0, Natural num (자연수)
 ---
